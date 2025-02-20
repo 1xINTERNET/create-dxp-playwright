@@ -220,6 +220,11 @@ export class Generator {
         command: this.packageManager.installDevDependency(`@playwright/test${packageTag}`),
         phase: 'pre',
       });
+      commands.push({
+        name: 'Installing dxp/playwright-tools',
+        command: this.packageManager.installDevDependency(`@dxp/playwright-tools${packageTag}`),
+        phase: 'pre',
+      });
     }
 
     if (this.options.ct) {
