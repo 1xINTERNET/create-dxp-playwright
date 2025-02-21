@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import {defineConfig, devices, TraceMode, ScreenshotMode, VideoMode} from '@playwright/test';
 import * as dotenv from 'dotenv';
 
 /**
@@ -33,11 +33,10 @@ export default defineConfig({
       username: String(process.env.BASIC_AUTH_USER),
       password: String(process.env.BASIC_AUTH_PASS),
     } : undefined,
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    // @todo: this should be configurable as this obviously creates plenty of artifacts.
-    trace: process.env?.PLAYWRIGHT_USE_TRACE ? process.env.PW_TRACE : 'on-first-retry',
-    screenshot: process.env?.PLAYWRIGHT_USE_SCREENSHOT ? process.env?.PLAYWRIGHT_USE_SCREENSHOT : (process.env.CI ? 'on' : undefined),
-    video: process.env?.PLAYWRIGHT_USE_VIDEO ? process.env?.PLAYWRIGHT_USE_VIDEO : (process.env.CI ? 'on' : undefined),
+    /* Use env to steer test artifacts */
+    trace: process.env?.PLAYWRIGHT_USE_TRACE ? String(process.env.PLAYWRIGHT_USE_TRACE) as TraceMode : 'on-first-retry',
+    screenshot: process.env?.PLAYWRIGHT_USE_SCREENSHOT ? String(process.env?.PLAYWRIGHT_USE_SCREENSHOT) as ScreenshotMode : (process.env.CI ? 'on' : undefined),
+    video: process.env?.PLAYWRIGHT_USE_VIDEO ? String(process.env?.PLAYWRIGHT_USE_VIDEO) as VideoMode : (process.env.CI ? 'on' : undefined),
   },
 
   /* Configure projects for major browsers */
