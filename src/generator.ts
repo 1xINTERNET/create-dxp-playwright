@@ -221,6 +221,11 @@ export class Generator {
         phase: 'pre',
       });
       commands.push({
+        name: 'Installing dotenv',
+        command: this.packageManager.installDevDependency(`dotenv`),
+        phase: 'pre',
+      });
+      commands.push({
         name: 'Installing dxp/playwright-tools',
         command: this.packageManager.installDevDependency(`@dxp/playwright-tools${packageTag}`),
         phase: 'pre',

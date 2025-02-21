@@ -1,6 +1,6 @@
 {
   "name": "@1xinternet/create-dxp-playwright",
-  "version": "1.17.135-5",
+  "version": "1.17.135-6",
   "description": "Getting started with writing end-to-end tests with Playwright.",
   "repository": {
     "type": "git",
