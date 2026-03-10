@@ -58,6 +58,7 @@ function _printHelp() {
       --install-deps: install dependencies (default: false)
       --next: install @next version of Playwright
       --beta: install @beta version of Playwright
+      --version=<version-constraint>: install package version of Playwright
       --ct: install Playwright Component testing
       --quiet: do not ask for interactive input prompts
       --gha: install GitHub Actions
