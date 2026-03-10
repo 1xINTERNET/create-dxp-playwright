@@ -28,6 +28,7 @@ export type PromptOptions = {
   installGitHubActions: boolean,
   language: 'JavaScript' | 'TypeScript',
   framework?: 'react' | 'react17' | 'vue' | 'vue2' | 'svelte' | 'solid' | undefined,
+  version?: string | undefined,
   installPlaywrightDependencies: boolean,
   installPlaywrightBrowsers: boolean,
 };
@@ -39,6 +40,7 @@ type CliArgumentKey = 'browser'
   | 'no-examples'
   | 'next'
   | 'beta'
+  | 'version'
   | 'ct'
   | 'quiet'
   | 'gha'
@@ -88,6 +90,7 @@ export class Generator {
         installPlaywrightDependencies: !!this.options['install-deps'],
         testDir: fs.existsSync(path.join(this.rootDir, 'tests')) ? 'e2e' : 'tests',
         framework: undefined,
+        version: this.options['version']?.[0] || undefined,
         installPlaywrightBrowsers: !this.options['no-browsers'],
       };
     }
@@ -213,6 +216,8 @@ export class Generator {
       packageTag = '@beta';
     if (this.options.next)
       packageTag = '@next';
+    if (this.options.version)
+      packageTag = '@' + this.options.version;
 
     if (!this.options.ct) {
       commands.push({
@@ -227,7 +232,7 @@ export class Generator {
       });
       commands.push({
         name: 'Installing dxp/playwright-tools',
-        command: this.packageManager.installDevDependency(`@dxp/playwright-tools${packageTag}`),
+        command: this.packageManager.installDevDependency(`@dxp/playwright-tools`),
         phase: 'pre',
       });
     }
