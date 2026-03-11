@@ -88,7 +88,7 @@ export class Generator {
         installGitHubActions: !!this.options.gha,
         language: this.options.lang?.[0] === 'js' ? 'JavaScript' : 'TypeScript',
         installPlaywrightDependencies: !!this.options['install-deps'],
-        testDir: fs.existsSync(path.join(this.rootDir, 'tests')) ? 'e2e' : 'tests',
+        testDir: 'tests',
         framework: undefined,
         version: this.options['version']?.[0] || undefined,
         installPlaywrightBrowsers: !this.options['no-browsers'],
@@ -126,7 +126,7 @@ export class Generator {
         type: 'text',
         name: 'testDir',
         message: 'Where to put your end-to-end tests?',
-        initial: fs.existsSync(path.join(this.rootDir, 'tests')) ? 'e2e' : 'tests',
+        initial: 'tests',
       },
       !this.options.ct && {
         type: 'confirm',
