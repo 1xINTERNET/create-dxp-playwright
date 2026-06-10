@@ -232,7 +232,7 @@ export class Generator {
       });
       commands.push({
         name: 'Installing dxp/playwright-tools',
-        command: this.packageManager.installDevDependency(`@dxp/playwright-tools`),
+        command: this.packageManager.installDevDependency(`@1xinternet/playwright-tools`),
         phase: 'pre',
       });
     }
