@@ -7,6 +7,9 @@ import * as dotenv from 'dotenv';
  */
 dotenv.config();
 
+/* Qaack sets IS_QCK instead of CI, so treat it as CI too. */
+const isCI = Boolean(process.env.CI || process.env.IS_QCK);
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -15,11 +18,13 @@ export default defineConfig({
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  forbidOnly: isCI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: isCI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: isCI ? 1 : undefined,
+  /* Timeout per test. Higher on CI to account for slower/shared runners. */
+  timeout: isCI ? 60_000 : 30_000,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -35,8 +40,8 @@ export default defineConfig({
     } : undefined,
     /* Use env to steer test artifacts */
     trace: process.env?.PLAYWRIGHT_USE_TRACE ? String(process.env.PLAYWRIGHT_USE_TRACE) as TraceMode : 'on-first-retry',
-    screenshot: process.env?.PLAYWRIGHT_USE_SCREENSHOT ? String(process.env?.PLAYWRIGHT_USE_SCREENSHOT) as ScreenshotMode : (process.env.CI ? 'on' : undefined),
-    video: process.env?.PLAYWRIGHT_USE_VIDEO ? String(process.env?.PLAYWRIGHT_USE_VIDEO) as VideoMode : (process.env.CI ? 'on' : undefined),
+    screenshot: process.env?.PLAYWRIGHT_USE_SCREENSHOT ? String(process.env?.PLAYWRIGHT_USE_SCREENSHOT) as ScreenshotMode : (isCI ? 'on' : undefined),
+    video: process.env?.PLAYWRIGHT_USE_VIDEO ? String(process.env?.PLAYWRIGHT_USE_VIDEO) as VideoMode : (isCI ? 'on' : undefined),
   },
 
   /* Configure projects for major browsers */
