@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-dotenv.config();
+dotenv.config({ quiet: true });
 
 /* Qaack sets IS_QCK instead of CI, so treat it as CI too. */
 const isCI = Boolean(process.env.CI || process.env.IS_QCK);
